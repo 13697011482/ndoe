@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <%- include('template/file') %>
+  <link rel="stylesheet" href="stylesheets/lagou.css">
+</head>
+<body>
+  <%- include('template/head') %>
+
+  <div class="container-fluid">
+    <div id="content" class="row">
+      <%- include('template/menu' , {name : ''}) %>
+      <main role="main" id="admin_content" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        欢迎来到拉钩网后台管理系统
+      </main>
+    </div>
+  </div>
+</body>
+</html>

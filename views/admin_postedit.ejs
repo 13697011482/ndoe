@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <%- include('template/file') %>
+</head>
+<body>
+  <%- include('template/head') %>
+
+  <div class="container-fluid">
+    <div class="row">
+      <%- include('template/menu' , {name : '职位管理'}) %>
+      <main  role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <%- include('template/breadcrumb',{ name : [{ link : '' , value : '职位管理' }] }) %>
+        <div>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">职位名称</th>
+                <th scope="col">工作地点</th>
+                <th scope="col">公司名称</th>
+                <th scope="col" width="200">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% infos.forEach((v,i) => { %>
+                <tr>
+                  <th scope="row"><%= i+1 %></th>
+                  <td class="align-middle"><%= v.name %></td>
+                  <td class="align-middle"><%= v.location %></td>
+                  <td class="align-middle"><%= v.company %></td>
+                  <td class="align-middle">
+                    <a href="/admin/postUpdate/<%= v.postId %>" class="btn btn-primary btn-sm">更新</a>
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#staticBackdrop" onclick="deleteId(<%= v.postId %>)">删除</button>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+        <div id="editItem" class="d-flex justify-content-center">
+          <ul id="post_wrapper" class="pagination">
+            <li class="page-item">
+              <a id="prev" class="page-link" href="/admin/postEdit/<%= now - 1 %>">
+                <span>&laquo;</span>
+              </a>
+            </li>
+            <% for(var i = 1 ; i <= pages ; i ++){ %>
+              <% if(i >= now && i <= now + 8 ){ %>
+                <li class="page-item <%= now == i ? 'active' : '' %>"><a class="page-link" href="/admin/postEdit/<%= i %>"><%= i %></a></li>
+              <% } %>
+            <% } %>
+            <li class="page-item">
+              <a id="next" class="page-link" href="/admin/postEdit/<%= now + 1 %>">
+                <span>&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">操作</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                是否删除该数据？
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="deleteActive()">确定</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+<script>
+  if($('#prev').attr('href') === "/admin/postEdit/0"){
+    $('#prev').attr('href' , "javascript:void(0)")
+  }
+    // if($('#next').attr('href') === "/admin/postEdit/"){
+    //   $('#next').attr('href' , "javascript:void(0)")
+    // }
+    var postId = 0
+    function deleteId(id){
+      postId = id  
+    }
+    function deleteActive(){
+      $.ajax({
+        url : '/works/remove',
+        data : { postId },
+        dataType : 'json',
+        success(res) {
+          if(res.code == 0){
+            location.reload()
+          }
+        }
+      })
+    }
+</script>
+</body>
+</html>

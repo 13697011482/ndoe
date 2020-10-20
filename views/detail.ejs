@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <%- include('template/file') %>
+  <link rel="stylesheet" href="stylesheets/lagou.css">
+</head>
+<body>
+  <nav class="site-header sticky-top py-1 bg-dark">
+    <div class="container d-flex flex-column flex-md-row justify-content-between">
+      <a class="py-2 text-success" href="#">
+        拉钩
+      </a>
+      <a class="py-2 text-white d-none d-md-inline-block" href="#">首页</a>
+      <a class="py-2 text-white d-none d-md-inline-block" href="#">公司</a>
+      <a class="py-2 text-white d-none d-md-inline-block" href="#">校园招聘</a>
+      <a class="py-2 text-white d-none d-md-inline-block" href="#">职位</a>
+      <a class="py-2 text-white d-none d-md-inline-block" href="#">留言</a>
+      <a class="py-2 text-white d-none d-md-inline-block" href="#">课程</a>
+      <a class="py-2 text-white d-none d-md-inline-block" href="#">退出</a>
+    </div>
+  </nav>
+  <div id="detail_wrapper" class=" d-inline-block">
+    <div class="detail_top d-inline-block">
+      <h3 class="d-inline-block"><%= WorkDetail.company %></h3>
+      <span class="font-weight-bold d-block" style="font-size: 36px;"><%= WorkDetail.name %></span>
+      <span class="mr-2"><%=WorkDetail.location %></span>
+      <span class="text-danger mr-2"><%=WorkDetail.wages %></span>
+      <span class="mr-2"><%=WorkDetail.education %></span>
+    </div>
+    <img class="float-right border border-secondary rounded-circle mt-2" style="width: 100px" src="<%=WorkDetail.image %>" alt="">
+    <div class="mt-3"><%=WorkDetail.requirement %></div>
+  </div>
+  
+</body>
+</html>

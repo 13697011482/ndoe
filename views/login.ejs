@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <%- include('template/file') %>
+  <link rel="stylesheet" href="stylesheets/lagou.css">
+</head>
+<body>
+  <form id="login" action="users/login" method="POST" class="border border-primary p-3">
+    <div class="form-group">
+      <label for="username">用户名</label>
+      <input type="text" class="form-control" id="username" name="username" autocomplete="off" placeholder="请输入用户名">
+    </div>
+    <div class="form-group">
+      <label for="password">密码</label>
+      <input type="password" class="form-control" id="password" name="password" autocomplete="off"  placeholder="请输入密码">
+    </div>
+    <div class="form-group">
+      <label for="check_code">验证码</label>
+      <input type="text" class="form-control" id="check_code"
+      name="checkCode" autocomplete="off"  placeholder="请输入验证码">
+      <img id="check_img" src="/users/checkCode" alt="">
+    </div>
+    <button type="submit" class="btn btn-primary">登录</button>
+    <a href="/register" class="float-right mt-2">立即注册</a>
+  </form>
+  <script>
+    var $username = $('#username');
+    var $password = $('#password');
+    $('#login').submit(function(){
+      if( !$username.val() || !$password.val() ){
+        $toast.toast('show')
+        $('.toast-body').html('输入框不能为空！')
+        return false;
+      }
+    })
+     $("#check_img").click(function(){
+      console.log(1);
+      $(this).attr('src' , '/users/checkCode?' + Math.random())
+    })
+  </script>
+</body>
+</html>

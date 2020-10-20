@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <%- include('template/file') %>
+</head>
+<body>
+  <%- include('template/head') %>
+
+  <div class="container-fluid">
+    <div class="row">
+      <%- include('template/menu' , {name : '职位更新'})%>
+      <main  role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <%- include('template/breadcrumb',{ name : [{ link : '/admin/postEdit/1' , value : '职位管理' } , { link : '' , value : '职位更新' }] }) %>
+      <form  action="/works/update" method="POST" class="p-3 col-8 offset-2 mb-5" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="name">职位名称</label>
+          <input type="text" value="<%= info.name %>" name="name" class="form-control" id="name">
+        </div>
+        <div class="form-group">
+          <label for="location">位置</label>
+          <input type="text" class="form-control"  value="<%= info.location %>" name="location"
+          id="location">
+        </div>
+        <div class="form-group">
+          <label for="company">公司</label>
+          <input type="text" 
+          name="company" class="form-control"  value="<%= info.company %>" id="company">
+        </div>
+        <div class="form-group">
+          <label for="wages">工资</label>
+          <select class="form-control" id="wages" name="wages">
+            <option <%= info.wages === '5k以下' ? 'selected' : '' %>>5k以下</option>
+            <option <%= info.wages === '5k-10k' ? 'selected' : '' %>>5k-10k</option>
+            <option <%= info.wages === '10k-15k' ? 'selected' : '' %>>10k-15k</option>
+            <option <%= info.wages === '15k-20k' ? 'selected' : '' %>>15k-20k</option>
+            <option <%= info.wages === '20k-25k' ? 'selected' : '' %>>20k-25k</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="WorkYears">工作时间</label>
+          <select class="form-control" id="WorkYears" name="WorkYears">
+            <option <%= info.WorkYears == '不限' ? 'selected' : '' %>>不限</option>
+            <option <%= info.WorkYears == '1-2年' ? 'selected' : '' %>>1-2年</option>
+            <option <%= info.WorkYears == '2-3年' ? 'selected' : '' %>>2-3年</option>
+            <option <%= info.WorkYears == '3-5年' ? 'selected' : '' %>>3-5年</option>
+            <option <%= info.WorkYears == '5年以上' ? 'selected' : '' %>>5年以上</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="education">学历</label>
+          <select class="form-control" id="education" name="education">
+            <option <%= info.education === '不限' ? 'selected' : '' %>>不限</option>
+            <option <%= info.education === '高中' ? 'selected' : '' %>>高中</option>
+            <option <%= info.education === '大专' ? 'selected' : '' %>>大专</option>
+            <option <%= info.education === '本科' ? 'selected' : '' %>>本科</option>
+            <option <%= info.education === '研究生硕士' ? 'selected' : '' %>>研究生硕士</option>
+            <option <%= info.education === '博士' ? 'selected' : '' %>>博士</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="number">招聘人数</label>
+          <input type="text" 
+          name="number" class="form-control" value="<%= info.number %>" id="company">
+        </div>
+        <div class="form-group">
+          <label for="image" class="btn btn-primary">公司logo
+            <input type="file" name="image" class="form-control d-none" id="image">
+          </label>
+          <img id="companyImg" src="<%= info.image %>" alt="">
+        </div>
+        <div class="form-group">
+          <label for="requirement">职位要求</label>
+          <textarea name="requirement" class="form-control" id="company" cols="30" rows="10"><%= info.requirement %></textarea>
+        </div>
+        <input type="hidden" name="postId" value="<%= info.postId %>">
+        <input type="hidden" name="prevLogo" value="<%= info.image %>">
+        <button type="submit" class="btn btn-primary">更新</button>
+      </form>
+      </main>
+    </div>
+  </div>
+  <script>
+    $("#image").change(function(){
+      var fileReader = new FileReader();
+      fileReader.onload = function(e){
+        $('#companyImg').attr('src' , e.target.result)
+      };
+      var imageFile = this.files[0];
+      fileReader.readAsDataURL(imageFile)
+    })
+  </script>
+</body>
+</html>
